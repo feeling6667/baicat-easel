@@ -1,0 +1,140 @@
+{
+  "display_name": "FB-060 · 绘本水彩",
+  "style_index": "FB-060",
+  "locked": true,
+  "lock_version": "2.5.0",
+  "lock_note": "【写死风格】本文件是 baicatcha 的唯一风格来源，风格特征、字体（分封面/正文两档）、文字硬性契约、画幅、负向约束全部锁定。模型与 Agent 一律不得改写、缩写、同义替换或临时替换风格与字体；要改只能改本文件（脚本会对 style_index 与字体锁做硬校验）。",
+  "license_note": "风格索引与参考图来自 github.com/yang0/handraw-style（MIT License），FB-060 索引作者 Marla Frazee；下列核心特征由参考图直接提炼。正文档字体为乐米蜡笔体 LemiLaBiTi（免费商用，来源见 baicat/assets/fonts/README.md）。",
+  "reference_image": "FB-060.webp",
+  "traits": [
+    "铅笔速写线稿打底、可见手绘线条感",
+    "水彩晕染透明上色、色块边缘有水渍扩散感",
+    "活泼童趣人物（大动作、头发飞扬、弯月眼、圆脸红晕）",
+    "明亮饱和的小面积重色（明黄、正红）",
+    "米白/奶油纸底、纸纹可见",
+    "动态感强（飞溅水花、斜线雨丝、飘动发丝）",
+    "大量留白、画面透气",
+    "欢乐顽皮的绘本故事氛围"
+  ],
+  "style_lock": {
+    "generation_name": "playful childlike pencil & watercolor storybook illustration",
+    "reference_author": "（不指名艺术家；风格由参考图锚定）",
+    "medium": "铅笔速写线稿 + 透明水彩晕染",
+    "ground": "米白/奶油色纸底，纸纹可见",
+    "palette_rule": "整体低饱和纸感底色，仅小面积高饱和重色点缀（明黄 #F5C518 / 正红 #D93A2B）",
+    "composition_rule": "大量留白、画面透气，主体偏一侧，顶部留出文字区",
+    "line_rule": "线条是手绘速写感，允许抖动与断笔，禁止矢量光滑描边与 3D 渲染",
+    "forbidden_media": [
+      "照片写实",
+      "3D/CGI 渲染",
+      "矢量扁平插画",
+      "赛博/霓虹/暗色调",
+      "厚涂油画与粗颗粒像素风"
+    ]
+  },
+  "typography": {
+    "locked": true,
+    "generated_by_model": true,
+    "hard_contract_version": "2.5.0",
+    "font_lock_note": "【写死字体 · 全部由生图模型在生成画面时用笔直接写进图里，与画面同一次生成、同一层；不允许任何形式的后期叠加/图层贴字】按页面 kind 选档：cover 用 cover 档（手写马克笔粗楷体），content / cta 用 body 档（乐米蜡笔体）。禁止模型自选字体；换字体只改本字段。",
+    "route": {
+      "cover": "cover",
+      "content": "body",
+      "cta": "body",
+      "default": "body"
+    },
+    "hard_contract": [
+      "同一支笔：本页所有文字（含关键词）必须是同一只手、同一支笔、同一笔触写出来的；关键词只换颜色不换字形。",
+      "所有文字都必须保持同一手写笔触，不许因为字小就变成印刷体/黑体/宋体/像素体/矢量字（这是最常见的失败）。",
+      "字要长在纸上：笔画与纸纹、水彩晕染处在同一层，边缘有颜料渗透、干笔飞白与轻微毛边；不许出现浮在画面上的扁平字层、纯色平滑填字、锐利矢量边、抠图贴字感。",
+      "不许叠字：每个字只出现一次，禁止重影、双影、叠印、字符重复；字与字不得相压、不得粘连（字距≥字宽 12%）；行与行不得交叠（行高≥字高 1.35 倍）；块内行与行之间至少留 0.4 个字高的空隙。",
+      "不许压画面：文字只占画面上部 ≤35%，不得压到人物、桌面、主体与关键道具上；放不下就整体缩小字号或减少字数，绝不叠压、绝不裁切、绝不换字体。",
+      "关键词只改颜色：正红 #D93A2B 只换颜色，笔触、粗细、字形必须与同一行的其余字完全一致；禁止加粗、禁止换体、禁止描边、禁止加底色块；本页关键词 2-4 个词（不超过 4 个）。",
+      "字号只有两种合法规则：封面＝有大小层次（第一行最大，其余行约为其 45%）；正文/收尾＝全页同一字号、逐行等高，第一行不得比其它行大。",
+      "正文/收尾页不分主次：每行字符高度必须完全相等（误差≤3%），字距相等、行距相等；禁止整块里出现一个明显更大的字或一行加粗。",
+      "人物始终一致（跨页锁定）：同一角色在每一页必须是同一张脸、同一发型发色、同一套衣服的款式与颜色、同一体型与年龄；禁止换装、换发型、换发色、换年龄、换性别、换画风；多人同框时每个人的设定分别固定，不得互换。",
+      "只画设定里的人：本页画面描述没提到的角色就不要出现，也不得凭空增加陌生人、路人主角或第二个孩子；人物数量按画面描述执行。"
+    ],
+    "shared_rules": {
+      "emphasis_color": "关键词填正红 #D93A2B（只换色不换字形），每页 2-4 个词（不超过 4 个），其余字保持墨黑",
+      "zh_correctness": "中文必须逐字正确、无错别字、无缺笔、无多余笔画；标点用中文全角；标题一行排完，超长则按字数自适应缩小字号而不是换行溢出",
+      "auto_fit_note": "封面：标题大、短句约 45%；正文/收尾：全页统一字号、逐字同大。统一字号按总字数自适应（单行占宽≤78%，字号≥画面宽 4.5%）",
+      "zh_style_forbidden": [
+        "印刷体/宋体/黑体/等线等机打字体",
+        "花体/连笔草书/艺术变形字",
+        "描边字、发光字、渐变字、立体投影字",
+        "矢量/剪辑软件字层、贴图式文字",
+        "重影字、双影字、叠印字、字压字",
+        "英文或拼音代替中文"
+      ],
+      "generated_note": "字体字形由模型在同一次生成中直接画进画面，不做任何后期贴字/叠字处理"
+    },
+    "cover": {
+      "font_name": "手写马克笔粗楷体",
+      "zh_heading": "手写马克笔粗楷体：笔画圆润饱满、起收笔有笔锋、横细竖粗、略带手写歪斜，字距紧凑不粘连",
+      "zh_heading_color": "墨黑 #1F1B16（不是纯黑），字缘轻微毛边、贴合纸纹",
+      "zh_subline": "与标题完全相同的手写马克笔粗楷体，只把字号降到约标题的 45%，笔触/笔锋/倾斜度一模一样，墨黑，行距宽松",
+      "zh_emphasis": "关键词填正红 #D93A2B（只换色不换字形），本页 2-4 个词（不超过 4 个），其余字保持墨黑",
+      "zh_auto_fit": "封面字号按标题字数自适应：字数多则缩字号与字距，字数少则放大（单行占宽不超过画面 78%，最小不小于画面宽 4.5%）",
+      "en_heading": "Handwritten marker-style bold kaishu (Chinese brush-script) lettering: rounded full strokes, visible entry/exit brush tips, thick verticals and thin horizontals, slightly tilted, tight but non-touching letter spacing",
+      "en_subline": "the SAME hand-lettered marker kaishu face, only scaled down to about 45% of the title size — identical stroke weight, brush tips and tilt, never a printed or UI typeface",
+      "zh_layout": "封面有大小层次：第一行最大，其余行约为第一行的 45%，同一支笔同一笔触"
+    },
+    "body": {
+      "font_name": "乐米蜡笔体（LemiLaBiTi）",
+      "zh_heading": "乐米蜡笔体式儿童蜡笔手写体：笔画圆润厚实、粗细不匀、边缘带蜡笔毛感、字形略歪斜不工整、字距宽松；无衬线、无楷体毛笔的顿笔与飞白、不做字形几何化处理",
+      "zh_heading_color": "墨黑 #1F1B16（不是纯黑），带蜡笔涂画的轻微颗粒感",
+      "zh_subline": "本页任意两行的字符高度、笔画粗细、字距都必须一致（同一支笔、同一个字号写完整页）",
+      "zh_emphasis": "关键词填正红 #D93A2B（只换色不换字形），本页 2-4 个词（不超过 4 个），其余字保持墨黑",
+      "zh_auto_fit": "全页统一字号按总字数自适应：行多或字多就整体缩小、字少就整体放大（按行数自适应，单行占宽不超过画面 78%）；任何情况下各行仍保持同一字号",
+      "en_heading": "hand-written children's crayon lettering — the look of the free Chinese font LemiLaBiTi (乐米蜡笔体): rounded chunky handwritten strokes, slightly uneven and wobbly, soft waxy crayon edges, playful childlike handwriting, generous letter spacing, no serifs, no kaiti/brush-calligraphy flicks, no typeface-perfect geometry",
+      "en_subline": "the SAME childlike crayon lettering, only scaled down to about 45% of the title size — identical waxy edges and wobble, never a printed or UI typeface",
+      "zh_layout": "本页所有文字是一个整体，不分标题、不分主次：全文只用一种字号，每行字符高度必须完全相等（误差≤3%），字距相等、行距相等；第一行不得比后面任何一行大，也不得整块里出现一个大字。目标字符高度＝画面宽度的 8%（1080px 画布约 86px），按行数自动微调但各行一起变，不许只放大某一行。",
+      "en_layout": "No size hierarchy on content pages: title and sub-lines share ONE uniform size, weight and letter spacing; no oversized headline, no drop cap, no bold-vs-regular contrast, every character the same size",
+      "zh_correctness": "中文逐字正确、无错别字、无缺笔、无多余笔画；标点用中文全角；每行都要完整放下，放不下就整块一起缩小字号，禁止只缩某一行或换行溢出"
+    }
+  },
+  "character_consistency": {
+    "locked": true,
+    "note": "【人物一致性锁】跨页同一批人。角色设定写在 storyboard.json 的 characters 里（name + look_zh/look_en），由 storyboard 落进 pages.json，再由 gen_pages 逐页注入 prompt。没有 characters 时本段自动省略，但不允许模型自行更换已有角色的外观。",
+    "rules": [
+      "同一角色在每一页必须完全一致：同一张脸、同一发型与发色、同一套衣服的款式与颜色、同一体型比例、同一年龄与性别。",
+      "禁止换装、换发型、换发色、换年龄、换性别、换体型、换画风；禁止因为页面场景不同就改人物造型。",
+      "只画本页画面描述里提到的角色；没提到就不要出现，禁止凭空增加陌生人、路人主角或第二个孩子。",
+      "多人同框时每个角色的设定分别固定，不得互换外观，也不得把两个人的衣服/发型混搭。",
+      "表情与动作可以随剧情变化，但五官画法、脸型、发际线、服装配色必须与设定完全一致。"
+    ],
+    "en_rules": [
+      "The same character must look identical on every page: same face, same hairstyle and hair colour, same clothing style and colours, same body proportions, same age and gender.",
+      "Never change costume, hairstyle, hair colour, age, gender, body build or rendering style between pages — a different scene is not a reason to redesign the character.",
+      "Draw only the characters named in this page's scene description; never add strangers, extra protagonists or a second child.",
+      "When several characters share the frame, keep each one's design fixed and never swap or mix their outfits and hairstyles.",
+      "Expression and pose may follow the story, but facial features, face shape, hairline and outfit colours must match the character sheet exactly."
+    ],
+    "template_zh": "【人物一致性（全篇跨页锁定，违反即判废图）】{cast}。{rules}【本页可出现的人物】{on_page}。",
+    "template_en": "[CHARACTER CONSISTENCY - LOCKED ACROSS ALL PAGES] {cast}. {rules} Characters allowed on this page: {on_page}."
+  },
+  "negative_prompt": [
+    "照片写实、3D 渲染、塑料质感",
+    "矢量描边、扁平 UI 风、渐变色块",
+    "印刷体/宋体/黑体中文字（含小字与短句）",
+    "矢量字层、贴图式文字、抠图贴字、后期叠字感",
+    "纯色平滑填字、锐利矢量字边",
+    "重影字、双影、叠印、字压字、字符重复",
+    "文字描边、发光、阴影、立体字、色块底衬",
+    "错别字、缺笔、糊字、乱码方块",
+    "满屏堆字、长段落入图",
+    "水印、logo、签名、二维码",
+    "暗色背景、霓虹光效、赛博朋克",
+    "人物换装、换发型、换发色、换年龄、跨页长相不一致",
+    "凭空多出陌生人或第二个主角、人物数量与描述不符"
+  ],
+  "prompt_template_zh": "风格：童趣手绘绘本插画（铅笔速写松线 + 透明水彩晕染）。风格基调以所附参考图为准，不指名任何艺术家。核心风格特征：{traits}。【本页字体（写死，不得更换；由你直接画进图里，不做后期贴字）】{typography}。{characters}主题/画面：{page_visual}。主题色：{theme_color}。画面文字：{page_text}。【禁止出现】{negative}。画幅：3:4 竖版，1080x1440。",
+  "prompt_template_en": "Style: playful childlike hand-drawn storybook illustration; loose pencil sketch lines with transparent watercolor washes. Match the attached reference image for style only. Key traits: {traits}. [LOCKED TYPOGRAPHY FOR THIS PAGE - lettering is drawn by you directly in the image in the same generation pass, never post-composited] {typography}. {characters}Scene: {page_visual}. Theme colors: {theme_color}. On-image text: {page_text}. [NEGATIVE] {negative}. Aspect ratio 3:4 vertical, 1080x1440.",
+  "ref_isolation_instruction": "所附图片仅用于参考画风。只提取参考图的风格特征，例如线条、笔触、媒介、材质、色彩倾向和整体视觉语言；不要使用、复制或延续参考图中的任何主体、人物、动物、服装、道具、动作、姿态、场景、背景、构图、布局、文字或故事。最终画面内容完全以用户提供的主题为准。",
+  "canvas": {
+    "ratio": "3:4",
+    "width": 1080,
+    "height": 1440
+  }
+}

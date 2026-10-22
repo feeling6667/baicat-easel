@@ -1,0 +1,114 @@
+{
+  "style_name": "fb060-handdrawn",
+  "display_name": "FB-060 绘本水彩手写",
+  "description": "童趣绘本水彩：铅笔速写线稿 + 透明水彩晕染，米白奶油纸底、纸纹可见，活泼童趣人物（大动作、飞扬发丝、弯月眼、圆脸红晕），小面积明黄/正红重色，大量留白。图内中文全部由模型直接写进画面：封面页用手写马克笔粗楷体，正文/收尾页用乐米蜡笔体（LemiLaBiTi），关键词一律正红 #D93A2B。带「文字硬性契约」：同一支笔、小字不许掉回机打体、不许叠字、不许贴图层。适合情感故事、亲子家庭、民间故事、共鸣型图文，把一条爆款或一段经历画成 3:4 竖版故事卡片组。**本风格是 Easel 生图全局默认风格。**",
+  "locked": true,
+  "lock_note": "【写死风格 + 写死字体 + 文字硬性契约 + 全局默认】本风格由 baicatcha 技能固化：风格特征、字体（封面/正文两档）、文字硬性契约、画幅、负向约束一律不得被模型或 Agent 改写。技能侧唯一来源是 skills/builtin/baicatcha/assets/fb060-frazee.json（脚本对 style_index 做硬校验）；本文件是它在 Easel 生图风格库里的登记副本，改字体/契约请同步改两处。全局默认在 skill-wechat-publisher/scripts/config.py 的 DEFAULT_IMAGE_STYLE / DEFAULT_NEWSPIC_IMAGE_STYLE。",
+  "suitable_for": [
+    "emotional-story",
+    "family-parenting",
+    "folk-story",
+    "resonance-narrative",
+    "picture-book-card",
+    "xhs-story-images"
+  ],
+  "newspic_ready": true,
+  "article_ready": true,
+  "canvas": {
+    "newspic_aspect": "3:4",
+    "newspic_size": "1080x1440",
+    "article_aspect": "3:4",
+    "article_size": "1080x1440"
+  },
+  "palette": {
+    "background": "#FFFDF8",
+    "paper_cream": "#FBF3E4",
+    "ink": "#1F1B16",
+    "accent_red": "#D93A2B",
+    "accent_yellow": "#F5C518",
+    "muted_blue": "#8FA9C4",
+    "text": "#1F1B16"
+  },
+  "typography": {
+    "locked": true,
+    "generated_by_model": true,
+    "hard_contract_version": "2.1.0",
+    "font_lock_note": "图内所有中文一律用下面这两档字体，全部由生图模型在同一次生成中用笔直接写进画面（不做后期贴字/叠字），禁止模型自选字体。封面页用 cover 档，正文/收尾页用 body 档。换字体/契约只改这里（并同步改 baicatcha/assets/fb060-frazee.json 的 typography）。",
+    "route": {
+      "cover": "cover",
+      "content": "body",
+      "cta": "body",
+      "default": "body"
+    },
+    "hard_contract": [
+      "同一支笔：标题、关键词、小字短句必须是同一只手、同一支笔、同一笔触写出来的；关键词只换颜色不换字形，短句只换字号不换字形。",
+      "小字最容易掉回机打体——短句、副标题、页脚等所有小字必须保持与标题完全相同的手写笔触，不许因为字小就变成印刷体/黑体/宋体/像素体/矢量字。",
+      "字要长在纸上：笔画与纸纹、水彩晕染处在同一层，边缘有颜料渗透、干笔飞白与轻微毛边；不许出现浮在画面上的扁平字层、纯色平滑填字、锐利矢量边、抠图贴字感。",
+      "不许叠字：每个字只出现一次，禁止重影、双影、叠印、字符重复；字与字不得相压、不得粘连（字距≥字宽 12%）；行与行不得交叠（行高≥字高 1.35 倍）；标题与短句之间至少留 1 个字高的空隙。",
+      "不许压画面：文字只占画面上部 ≤35%，不得压到人物、桌面、主体与关键道具上；放不下就缩小字号或减少字数，绝不叠压、绝不裁切、绝不换字体。",
+      "关键词只改颜色：正红 #D93A2B 只换颜色，笔触、粗细、字形必须与同一行的其余字完全一致；禁止加粗、禁止换体、禁止描边、禁止加底色块。"
+    ],
+    "hard_contract_en": [
+      "ONE single hand: title, key words and all small print are written by the SAME hand, same pen, same stroke; a key word only changes colour, never its letterform; small print only changes size, never its typeface.",
+      "Small print must NEVER fall back to a printed/UI typeface — this is the most common failure; keep the identical hand-written stroke even when the text is tiny.",
+      "The lettering must live IN the paper: strokes share the paper grain and watercolour bleed, with dry-brush edges and slight roughness — never a flat pasted text layer, never smooth solid fill, never razor-sharp vector edges, never sticker-like cut-out letters.",
+      "NO overlapping glyphs: every character appears exactly once, no ghosting, double-image, overprint or duplicated letters; characters must not touch (letter spacing >= 12% of character width), lines must not collide (line height >= 1.35x character height), and leave at least one character-height gap between title and sub-line.",
+      "Text occupies at most the top 35% of the canvas and never covers faces, hands or key props; if it does not fit, reduce the size or the word count — never overlap, never crop, never switch typeface.",
+      "Emphasis colour only: vermilion #D93A2B changes colour only — same stroke weight and letterform, no bolding, no outline, no background block."
+    ],
+    "shared_rules": {
+      "emphasis_color": "关键词填正红 #D93A2B（只换色不换字形），每页 2-4 个词（不超过 4 个），其余字保持墨黑",
+      "zh_correctness": "中文逐字正确、无错别字、无缺笔、无多余笔画；标点用中文全角；标题一行排完，超长缩小字号而不是溢出",
+      "zh_style_forbidden": "印刷体/宋体/黑体/等线等机打字体；花体/连笔草书/艺术变形字；描边字、发光字、渐变字、立体投影字；矢量/剪辑软件字层、贴图式文字；重影字、双影字、叠印字、字压字；用英文或拼音代替中文",
+      "auto_fit_note": "字号不写死像素值：按本页实际字数自适应——字数多缩字号与字距，字数少放大字号；上限单行占宽 78%，下限不小于画面宽 4.5%"
+    },
+    "cover": {
+      "font_name": "手写马克笔粗楷体",
+      "heading": "手写马克笔粗楷体：笔画圆润饱满、起收笔有笔锋、横细竖粗、略带手写歪斜，字距紧凑不粘连，墨黑 #1F1B16",
+      "body": "与标题完全相同的手写马克笔粗楷体，只把字号降到约 45%，笔触/笔锋/倾斜度一模一样，墨黑，行距宽松",
+      "emphasis": "关键词填正红 #D93A2B（只换色不换字形），本页 2-4 个词（不超过 4 个）",
+      "auto_fit": "字号按本页字数自适应：字数多缩字号与字距，字数少放大（单行占宽≤画面 78%，字号≥画面宽 4.5%）；短句约为标题 45%"
+    },
+    "body": {
+      "font_name": "乐米蜡笔体（LemiLaBiTi）",
+      "heading": "乐米蜡笔体式儿童蜡笔手写体：笔画圆润厚实、粗细不匀、边缘带蜡笔毛感、字形略歪斜不工整、字距宽松；无衬线、无楷体毛笔的顿笔与飞白、不做字形几何化处理；墨黑 #1F1B16",
+      "body": "与标题完全相同的乐米蜡笔体手写体，只把字号降到约 45%，蜡笔颗粒感与歪斜度一模一样，墨黑，行距宽松",
+      "emphasis": "关键词填正红 #D93A2B（只换色不换字形），本页 2-4 个词（不超过 4 个）",
+      "auto_fit": "One uniform size for the whole card, auto-fitted to the character count: more text = slightly smaller size and tighter spacing, less text = larger (line width <= 78% of canvas, size >= 4.5% of canvas width); title and sub-line always the SAME size",
+      "layout": "No size hierarchy on content cards: title and sub-lines share ONE uniform size, weight and letter spacing; no oversized headline, no drop cap, no bold-vs-regular contrast — every character the same size."
+    }
+  },
+  "negative_prompt": "照片写实、3D 渲染、塑料质感、矢量描边、扁平 UI 风、渐变色块、印刷体/宋体/黑体中文字（含小字与短句）、矢量字层、贴图式文字、抠图贴字、后期叠字感、纯色平滑填字、锐利矢量字边、重影字、双影、叠印、字压字、字符重复、文字描边/发光/阴影/立体字/色块底衬、错别字、缺笔、糊字、乱码方块、满屏堆字、长段落入图、水印、logo、签名、二维码、暗色背景、霓虹光效、赛博朋克",
+  "mood": [
+    "warm",
+    "childlike",
+    "storybook",
+    "airy",
+    "handmade",
+    "治愈",
+    "童趣"
+  ],
+  "prompt_template": {
+    "newspic_card": "Generate a children's picture-book watercolor story card in Chinese, 3:4 portrait, 1080x1440. Style: playful childlike pencil & watercolor storybook illustration — pencil sketch line-work under transparent watercolor washes with visible bleed at the edges, lively childlike figures with big gestures, flying hair, crescent eyes and round blush cheeks, small areas of saturated yellow (#F5C518) and vermilion (#D93A2B), cream paper ground (#FFFDF8 / #FBF3E4) with visible paper grain, lots of white space, joyful mischievous mood.\n\nTHIS IS A CONTENT CARD. All Chinese text is written by you directly in the image, in the same generation pass, never as a pasted layer. Title '{card_main}' and sub-line '{card_sub}' use the LOCKED BODY lettering: hand-written children's crayon lettering — the look of the free Chinese font LemiLaBiTi (乐米蜡笔体): rounded chunky handwritten strokes, slightly uneven and wobbly, soft waxy crayon edges, playful childlike handwriting, generous letter spacing, no serifs, no kaiti/brush-calligraphy flicks, no typeface-perfect geometry; ink #1F1B16. SIZE RULE FOR CONTENT CARDS: no oversized headline — the title and the sub-line are the SAME size, same weight, same letter spacing; every character on the card is the same size, auto-fitted to the total character count (more text = slightly smaller, less text = larger).\n\nLOCKED TYPOGRAPHY CONTRACT — violating ANY line invalidates the image: (1) ONE single hand: title, key words and all small print come from the SAME hand, same pen, same stroke; a key word only changes colour, never its letterform; small print only changes size, never its typeface. (2) Small print must NEVER fall back to a printed/UI typeface — this is the most common failure; keep the identical hand-written stroke even when tiny. (3) The lettering must live IN the paper: strokes share the paper grain and watercolour bleed, with dry-brush edges and slight roughness — never a flat pasted text layer, never smooth solid fill, never razor-sharp vector edges, never sticker-like cut-out letters. (4) NO overlapping glyphs: every character appears exactly once, no ghosting, double-image, overprint or duplicated letters; characters must not touch (letter spacing >= 12% of character width), lines must not collide (line height >= 1.35x character height), and leave at least one character-height gap between title and sub-line. (5) Text occupies at most the top 35% of the canvas and never covers faces, hands or key props; if it does not fit, reduce the size or the word count — never overlap, never crop, never switch typeface. (6) Emphasis colour only: #D93A2B changes colour only — same stroke weight and letterform, no bolding, no outline, no background block. (7) Never invent, duplicate or add text that was not provided. Chinese characters must be exactly correct with full-width punctuation.\n\nNO photos, no 3D, no vector flat illustration, no gradients, no dark or neon background, no printed/serif/sans-serif type (including small print), no vector text layer or sticker lettering, no ghosting or overprinted glyphs, no outlined or glowing text, no watermark, logo or signature. If recurring characters appear, keep face, hairstyle, hair colour, outfit style and colours, body build and age IDENTICAL to the character sheet on every card — never redesign a character between cards.",
+    "cover_card": "Generate a children's picture-book watercolor story COVER in Chinese, 3:4 portrait, 1080x1440. Style: playful childlike pencil & watercolor storybook illustration — pencil sketch line-work under transparent watercolor washes with visible edge bleed, lively childlike characters (big gestures, flying hair, crescent eyes, round blush), small saturated yellow (#F5C518) and vermilion (#D93A2B) accents, cream paper ground with visible grain, generous white space, a strong single focal moment.\n\nCOVER PAGE. All Chinese text is written by you directly in the image, in the same generation pass, never as a pasted layer. Cover title '{card_main}' and sub-line '{card_sub}' use the LOCKED COVER lettering: handwritten marker-style bold kaishu — rounded full strokes, visible entry/exit brush tips, thick verticals and thin horizontals, slightly tilted, tight but non-touching letter spacing, ink #1F1B16. SIZE RULE FOR THE COVER: the cover title is the largest element and the sub-line is about 45% of the title size — the only page allowed to have this hierarchy.\n\nLOCKED TYPOGRAPHY CONTRACT — violating ANY line invalidates the image: (1) ONE single hand: title, key words and all small print come from the SAME hand, same pen, same stroke; a key word only changes colour, never its letterform; small print only changes size, never its typeface. (2) Small print must NEVER fall back to a printed/UI typeface; keep the identical hand-written stroke even when tiny. (3) The lettering must live IN the paper: strokes share the paper grain and watercolour bleed, with dry-brush edges — never a flat pasted text layer, never smooth solid fill, never razor-sharp vector edges, never sticker-like cut-out letters. (4) NO overlapping glyphs: every character appears exactly once, no ghosting, double-image, overprint or duplicated letters; characters must not touch (letter spacing >= 12% of character width), lines must not collide (line height >= 1.35x character height), at least one character-height gap between title and sub-line. (5) Text occupies at most the top 35% of the canvas and never covers faces, hands or key props; if it does not fit, reduce the size or the word count — never overlap, never crop, never switch typeface. (6) Emphasis colour only: #D93A2B changes colour only, same stroke weight and letterform, no bolding, no outline, no background block. (7) Never invent, duplicate or add text that was not provided. Chinese characters must be exactly correct with full-width punctuation.\n\nNO photos, no 3D, no vector flat style, no gradients, no dark or neon background, no printed/serif/sans-serif type (including small print), no vector text layer or sticker lettering, no ghosting or overprinted glyphs, no outlined or glowing text, no watermark, logo or signature. If recurring characters appear, keep face, hairstyle, hair colour, outfit style and colours, body build and age IDENTICAL to the character sheet on every card — never redesign a character between cards.",
+    "article_inline": "Generate a children's picture-book watercolor illustration in Chinese, 3:4 portrait, 1080x1440. Style: （风格参考，不指名艺术家） playful childlike pencil & watercolor storybook — pencil sketch line-work under transparent watercolor washes with visible edge bleed, lively childlike characters (big gestures, flying hair, crescent eyes, round blush), small saturated yellow (#F5C518) and vermilion (#D93A2B) accents, cream paper ground with visible grain, generous white space. Topic: '{image_subject}'.\n\nAll Chinese text is written by you directly in the image, in the same generation pass, never as a pasted layer, in the LOCKED BODY lettering: hand-written children's crayon lettering in the style of the free Chinese font LemiLaBiTi (乐米蜡笔体) — rounded chunky strokes, slightly uneven and wobbly, soft waxy crayon edges, playful childlike handwriting, generous letter spacing, no serifs, no brush-calligraphy flicks; ink #1F1B16. SIZE RULE FOR CONTENT IMAGES: no oversized headline — all text lines share ONE uniform size and weight, auto-fitted to the character count; no drop cap, no bold-vs-regular contrast.\n\nLOCKED TYPOGRAPHY CONTRACT — violating ANY line invalidates the image: (1) ONE single hand for title, key words and all small print; key words change colour only, small print changes size only. (2) Small print must NEVER fall back to a printed/UI typeface. (3) The lettering lives IN the paper — dry-brush edges, paper grain, no flat pasted text layer, no razor-sharp vector edges. (4) NO overlapping glyphs: each character once, no ghosting, no overprint, characters must not touch, lines must not collide, one character-height gap between title and sub-line. (5) Text at most the top 35% of the canvas, never covering faces or key props; shrink or cut words instead of overlapping. (6) #D93A2B changes colour only, no bolding or outline. (7) Never add text that was not provided.\n\nNO photos, no 3D, no vector flat style, no gradients, no dark background, no printed/serif/sans-serif type, no vector text layer or sticker lettering, no ghosting, no outlined or glowing text, no watermark, logo or signature. If recurring characters appear, keep face, hairstyle, hair colour, outfit style and colours, body build and age IDENTICAL to the character sheet on every card — never redesign a character between cards."
+  },
+  "example_reference": "FB-060 · 绘本水彩（ + 铅笔速写线稿 + 米白纸底 + 明黄/正红点缀 + 封面手写马克笔粗楷体 / 正文乐米蜡笔体 + 文字硬性契约）",
+  "notes": "视觉指纹是「铅笔速写线稿 + 透明水彩晕染 + 米白纸纹 + 大留白 + 封面马克笔粗楷体 + 正文乐米蜡笔体 + 关键词正红（只换色不换字形）」。**Easel 生图全局默认风格**（config.py 的 DEFAULT_IMAGE_STYLE / DEFAULT_NEWSPIC_IMAGE_STYLE 都指向它），不写 image_style 就走这个。**文字硬性契约 v2.1**：同一支笔、小字不许掉回机打体、字长在纸上、不许叠字/重影、文字区≤35%、关键词只改颜色——2026-10-21 实测踩过「短句掉回黑体、关键词换字形」的坑，才加的这组硬约束。人物跨页保持一致由 character_consistency 锁死（角色台词本由调用方给）。要换回旧默认：文章模式改 warm-handdrawn，贴图模式改 infographic-warm。",
+  "character_consistency": {
+    "locked": true,
+    "note": "【人物一致性锁】跨页/跨卡同一批人。做故事类图文时由调用方给出角色台词本，正文里逐页注入；没有角色信息时本段不生效，但已出现的角色不得擅自改造型。",
+    "rules": [
+      "同一角色在每一页必须是同一张脸、同一发型与发色、同一套衣服的款式与颜色、同一体型与年龄。",
+      "禁止换装、换发型、换发色、换年龄、换性别、换画风。",
+      "只画本页画面描述里提到的角色，禁止凭空增加陌生人或第二个主角。",
+      "多人同框时每个角色分别固定，不得互换外观、不得混搭衣服与发型。"
+    ],
+    "en_rules": [
+      "The same character must look identical on every card: same face, same hairstyle and hair colour, same outfit style and colours, same body build, same age and gender.",
+      "Never change costume, hairstyle, hair colour, age, gender, body build or rendering style between cards.",
+      "Draw only the characters named in this card's description; never add strangers or an extra protagonist.",
+      "When several characters share the frame, keep each design fixed and never swap or mix their outfits and hairstyles."
+    ]
+  }
+}

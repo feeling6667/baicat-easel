@@ -1,0 +1,127 @@
+/* 流式「思考进度」一行（ThinkProgress.tsx）
+ * 默认收起只占一行（30px），展开体自带 max-height 滚动，不撑高对话框。
+ * 只使用 theme.css / index.css 里已有的主题变量，不引入新依赖。 */
+
+.tp { display: flex; flex-direction: column; gap: 6px; margin-bottom: 8px; }
+
+.tp-row {
+  display: flex; align-items: center; gap: 7px;
+  height: 30px; min-height: 30px;
+  font-size: 12.5px; line-height: 1.2;
+  color: var(--text-secondary);
+  overflow: hidden;
+}
+
+.tp-spinner {
+  width: 12px; height: 12px; flex-shrink: 0; border-radius: 50%;
+  border: 2px solid var(--accent-soft);
+  border-top-color: var(--accent-end);
+  animation: tp-spin 0.8s linear infinite;
+}
+@keyframes tp-spin { to { transform: rotate(360deg); } }
+
+.tp-status { color: var(--text); font-weight: 550; flex-shrink: 0; }
+
+.tp-meta {
+  color: var(--text-tertiary); flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+/* 最后一行预览：单行 ellipsis，占满剩余宽度 */
+.tp-preview {
+  flex: 1 1 auto; min-width: 0;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  color: var(--text-tertiary);
+}
+
+/* 静默提示：超过 8s 没收到任何分片时出现，让用户一眼看出可能卡住 */
+.tp-quiet { color: var(--amber); flex-shrink: 0; }
+
+/* 防呆「未卡住」提示：次级样式附着，弱化显示，不喧宾夺主 */
+.tp-still {
+  color: var(--text-tertiary); opacity: 0.75; font-size: 12px;
+  flex-shrink: 1; min-width: 0;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+
+.tp-toggle {
+  flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center;
+  width: 24px; height: 24px; padding: 0;
+  border: 1px solid var(--border); border-radius: var(--radius);
+  background: var(--surface); color: var(--text-secondary);
+  cursor: pointer;
+  transition: background var(--t-fast, 0.14s ease), color var(--t-fast, 0.14s ease),
+    border-color var(--t-fast, 0.14s ease);
+}
+.tp-toggle:hover { background: var(--surface-2); color: var(--text); }
+.tp-toggle:focus-visible { outline: 2px solid var(--accent-end); outline-offset: 2px; }
+
+/* 收起：⌄（朝下）／展开：⌃（朝上） */
+.tp-chev { transition: transform 0.15s ease; }
+.tp-chev.off { transform: rotate(90deg); }
+.tp-chev.on { transform: rotate(-90deg); }
+
+/* 展开体：思考全文 + 活动步骤，超出 180px 自身滚动 */
+.tp-body {
+  max-height: 180px; overflow-y: auto; overscroll-behavior: contain;
+  padding: 8px 10px;
+  border-left: 2px solid var(--accent-soft);
+  background: var(--surface-2);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  box-shadow: var(--shadow-sm);
+  font-size: 12.5px; line-height: 1.6; color: var(--text-tertiary);
+}
+.tp-think { white-space: pre-wrap; word-break: break-word; }
+
+/* 实时输出段（thinking 与 progress 两条通道并存时的第二段，用虚线分隔，避免看成一整段） */
+.tp-progress {
+  white-space: pre-wrap; word-break: break-word;
+  margin-top: 6px; padding-top: 6px;
+  border-top: 1px dashed var(--border);
+}
+
+.tp-steps { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+.tp-steps li { white-space: pre-wrap; word-break: break-word; }
+.tp-steps li::before { content: '· '; color: var(--accent-end); }
+
+/* ---- 执行流水（真正「进行到哪一步」）：编号 + 工具名 + 状态 + 耗时 ---- */
+.tp-flow {
+  list-style: none; display: flex; flex-direction: column; gap: 3px;
+  margin-bottom: 8px; padding-bottom: 8px;
+  border-bottom: 1px dashed var(--border);
+}
+.tp-flow-item {
+  display: flex; align-items: center; gap: 7px;
+  font-size: 12.5px; line-height: 1.5; color: var(--text-secondary);
+}
+.tp-flow-idx {
+  flex-shrink: 0; min-width: 18px; text-align: right;
+  color: var(--text-tertiary); font-variant-numeric: tabular-nums;
+}
+.tp-flow-name {
+  flex: 0 1 auto; min-width: 0; color: var(--text);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+/* 工具名兜底标签（模型没写 title、或 title 只是路径时的次级说明） */
+.tp-flow-tier {
+  flex-shrink: 0; color: var(--text-tertiary); font-size: 11.5px;
+}
+.tp-flow-badge {
+  flex-shrink: 0; padding: 0 5px; border-radius: 4px;
+  font-size: 11px; color: var(--accent-end); background: var(--accent-soft);
+}
+.tp-flow-badge-bad { color: var(--amber); background: transparent; }
+.tp-flow-dur {
+  flex-shrink: 0; color: var(--text-tertiary);
+  font-variant-numeric: tabular-nums;
+}
+/* 进行中的那一步：左侧露出一段动态点，和已完成的静态行区分开 */
+.tp-flow-item.tp-running .tp-flow-name { color: var(--accent-end); font-weight: 550; }
+.tp-flow-item.tp-failed .tp-flow-name { color: var(--amber); }
+
+.tp-empty { color: var(--text-tertiary); }
+
+@media (prefers-reduced-motion: reduce) {
+  .tp-spinner { animation: none; }
+  .tp-chev { transition: none; }
+}
