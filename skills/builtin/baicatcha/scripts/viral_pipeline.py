@@ -667,7 +667,11 @@ def _build_prompt(style: dict, page: dict, characters: list | None = None) -> st
         parts = [f"大字标题「{page['title']}」"]
         if lines:
             parts.append("短句「" + " / ".join(lines) + "」")
-        page_text = "；".join(parts) + "（封面：标题大、短句约标题 45%，同一支笔；字号按字数自适应）"
+        page_text = "；".join(parts) + (
+            "（封面：标题最大，目标字符高度＝画面宽度 8%（1080px 画布约 86px），"
+            "短句约标题 45%；同一支笔；字号按字数自适应。"
+            "基准关系：正文/收尾页字号固定为封面标题的 65%＝画面宽度 5.2%）"
+        )
     else:
         # 正文/收尾：整块统一字号，按行照抄（不区分"标题/短句"，第一行也不许更大）
         rows = [page["title"]] + lines
@@ -675,9 +679,11 @@ def _build_prompt(style: dict, page: dict, characters: list | None = None) -> st
         page_text = (
             "本页文字（同一字号的整块文字，共 " + str(len(rows)) + " 行，照抄不得增删字）："
             + listed + "。"
-            + "字号规则：每行字符高度必须相等（误差不超过 3%），目标字符高度等于画面宽度的 8%"
-            + "（1080px 画布约 86px），字距相等、行距相等；第一行与其它行一样大，不得放大、不得加粗；"
-            + "整块只随总字数整体缩放，不许单独放大某一行；关键词正红 #D93A2B、只换色不换字形。"
+            + "字号规则：每行字符高度必须相等（误差不超过 3%），目标字符高度等于封面标题字号的 65%"
+            + "（封面标题＝画面宽度 8%，故本页＝画面宽度 5.2%，1080px 画布约 56px，比封面标题明显小一号）；"
+            + "字距相等、行距相等；第一行与其它行一样大，不得放大、不得加粗；"
+            + "整块只随总字数整体缩放（放不下时整体缩小，最小不小于画面宽 4.5%），不许单独放大某一行；"
+            + "关键词正红 #D93A2B、只换色不换字形。"
         )
     tpl = style.get("prompt_template_zh") or ""
     return tpl.format(traits=traits, page_visual=visual,

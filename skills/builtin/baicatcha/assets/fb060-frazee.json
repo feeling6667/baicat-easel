@@ -50,7 +50,8 @@
       "不许叠字：每个字只出现一次，禁止重影、双影、叠印、字符重复；字与字不得相压、不得粘连（字距≥字宽 12%）；行与行不得交叠（行高≥字高 1.35 倍）；块内行与行之间至少留 0.4 个字高的空隙。",
       "不许压画面：文字只占画面上部 ≤35%，不得压到人物、桌面、主体与关键道具上；放不下就整体缩小字号或减少字数，绝不叠压、绝不裁切、绝不换字体。",
       "关键词只改颜色：正红 #D93A2B 只换颜色，笔触、粗细、字形必须与同一行的其余字完全一致；禁止加粗、禁止换体、禁止描边、禁止加底色块；本页关键词 2-4 个词（不超过 4 个）。",
-      "字号只有两种合法规则：封面＝有大小层次（第一行最大，其余行约为其 45%）；正文/收尾＝全页同一字号、逐行等高，第一行不得比其它行大。",
+      "字号基准链（写死，不许改）：封面标题＝画面宽度的 8%（1080px 画布约 86px）；封面短句＝封面标题的 45%；正文/收尾＝封面标题的 65%＝画面宽度的 5.2%（1080px 画布约 56px）。",
+      "字号只有两种合法规则：封面＝有大小层次（第一行最大，其余行约为其 45%）；正文/收尾＝全页同一字号、逐行等高，第一行不得比其它行大；正文字号必须明显小于封面标题，是它的 65%，不许与封面标题同大。",
       "正文/收尾页不分主次：每行字符高度必须完全相等（误差≤3%），字距相等、行距相等；禁止整块里出现一个明显更大的字或一行加粗。",
       "人物始终一致（跨页锁定）：同一角色在每一页必须是同一张脸、同一发型发色、同一套衣服的款式与颜色、同一体型与年龄；禁止换装、换发型、换发色、换年龄、换性别、换画风；多人同框时每个人的设定分别固定，不得互换。",
       "只画设定里的人：本页画面描述没提到的角色就不要出现，也不得凭空增加陌生人、路人主角或第二个孩子；人物数量按画面描述执行。"
@@ -58,7 +59,7 @@
     "shared_rules": {
       "emphasis_color": "关键词填正红 #D93A2B（只换色不换字形），每页 2-4 个词（不超过 4 个），其余字保持墨黑",
       "zh_correctness": "中文必须逐字正确、无错别字、无缺笔、无多余笔画；标点用中文全角；标题一行排完，超长则按字数自适应缩小字号而不是换行溢出",
-      "auto_fit_note": "封面：标题大、短句约 45%；正文/收尾：全页统一字号、逐字同大。统一字号按总字数自适应（单行占宽≤78%，字号≥画面宽 4.5%）",
+      "auto_fit_note": "封面：标题为画面宽 8%、短句约其 45%；正文/收尾：全页统一字号、逐字同大，字号＝封面标题的 65%（画面宽 5.2%），绝不与封面标题同大。统一字号按本页字数自适应（单行占宽≤78%，正文范围画面宽 4.5%~6.5%）",
       "zh_style_forbidden": [
         "印刷体/宋体/黑体/等线等机打字体",
         "花体/连笔草书/艺术变形字",
@@ -75,7 +76,7 @@
       "zh_heading_color": "墨黑 #1F1B16（不是纯黑），字缘轻微毛边、贴合纸纹",
       "zh_subline": "与标题完全相同的手写马克笔粗楷体，只把字号降到约标题的 45%，笔触/笔锋/倾斜度一模一样，墨黑，行距宽松",
       "zh_emphasis": "关键词填正红 #D93A2B（只换色不换字形），本页 2-4 个词（不超过 4 个），其余字保持墨黑",
-      "zh_auto_fit": "封面字号按标题字数自适应：字数多则缩字号与字距，字数少则放大（单行占宽不超过画面 78%，最小不小于画面宽 4.5%）",
+      "zh_auto_fit": "封面标题基准字符高度＝画面宽度的 8%（1080px 画布约 86px），按字数自适应：字数多则缩字号与字距，字数少则放大（单行占宽不超过画面 78%，字号范围画面宽 6%~10%）。这个 8% 是全套图的字号锚点：正文/收尾页＝它的 65%（画面宽 5.2%），封面短句＝它的 45%",
       "en_heading": "Handwritten marker-style bold kaishu (Chinese brush-script) lettering: rounded full strokes, visible entry/exit brush tips, thick verticals and thin horizontals, slightly tilted, tight but non-touching letter spacing",
       "en_subline": "the SAME hand-lettered marker kaishu face, only scaled down to about 45% of the title size — identical stroke weight, brush tips and tilt, never a printed or UI typeface",
       "zh_layout": "封面有大小层次：第一行最大，其余行约为第一行的 45%，同一支笔同一笔触"
@@ -86,10 +87,10 @@
       "zh_heading_color": "墨黑 #1F1B16（不是纯黑），带蜡笔涂画的轻微颗粒感",
       "zh_subline": "本页任意两行的字符高度、笔画粗细、字距都必须一致（同一支笔、同一个字号写完整页）",
       "zh_emphasis": "关键词填正红 #D93A2B（只换色不换字形），本页 2-4 个词（不超过 4 个），其余字保持墨黑",
-      "zh_auto_fit": "全页统一字号按总字数自适应：行多或字多就整体缩小、字少就整体放大（按行数自适应，单行占宽不超过画面 78%）；任何情况下各行仍保持同一字号",
+      "zh_auto_fit": "全页统一字号按总字数自适应：基准为封面标题的 65%（画面宽 5.2%），行多或字多就整体缩小、字少就整体放大（按行数自适应，单行占宽不超过画面 78%，字号不得超出画面宽 4.5%~6.5%）；任何情况下各行仍保持同一字号，且始终明显小于封面标题",
       "en_heading": "hand-written children's crayon lettering — the look of the free Chinese font LemiLaBiTi (乐米蜡笔体): rounded chunky handwritten strokes, slightly uneven and wobbly, soft waxy crayon edges, playful childlike handwriting, generous letter spacing, no serifs, no kaiti/brush-calligraphy flicks, no typeface-perfect geometry",
       "en_subline": "the SAME childlike crayon lettering, only scaled down to about 45% of the title size — identical waxy edges and wobble, never a printed or UI typeface",
-      "zh_layout": "本页所有文字是一个整体，不分标题、不分主次：全文只用一种字号，每行字符高度必须完全相等（误差≤3%），字距相等、行距相等；第一行不得比后面任何一行大，也不得整块里出现一个大字。目标字符高度＝画面宽度的 8%（1080px 画布约 86px），按行数自动微调但各行一起变，不许只放大某一行。",
+      "zh_layout": "本页所有文字是一个整体，不分标题、不分主次：全文只用一种字号，每行字符高度必须完全相等（误差≤3%），字距相等、行距相等；第一行不得比后面任何一行大，也不得整块里出现一个大字。目标字符高度＝封面标题字号的 65%＝画面宽度的 5.2%（1080px 画布约 56px）——比封面标题明显小一号，绝不许与封面标题同大；按行数自动微调但各行一起变，不许只放大某一行。",
       "en_layout": "No size hierarchy on content pages: title and sub-lines share ONE uniform size, weight and letter spacing; no oversized headline, no drop cap, no bold-vs-regular contrast, every character the same size",
       "zh_correctness": "中文逐字正确、无错别字、无缺笔、无多余笔画；标点用中文全角；每行都要完整放下，放不下就整块一起缩小字号，禁止只缩某一行或换行溢出"
     }

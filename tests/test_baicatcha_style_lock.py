@@ -202,7 +202,10 @@ def test_content_pages_have_no_big_headline_and_uniform_size():
     # 契约层面也要求了
     contract = vp._locked_contract(style)
     assert "不分主次" in contract and "字符高度必须完全相等" in contract
-    assert "标题" not in contract, "契约里不该再出现标题/短句的层级语言"
+    # 契约里的「封面标题」是整套图的字号锚点，不属于正文页内部的层级语言；
+    # 2026-10-23 起因正文字号固定为封面标题的 65%（用户要求），故排除该词后再查层级残留。
+    assert "标题" not in contract.replace("封面标题", ""), "契约里不该再出现标题/短句的层级语言"
+    assert "65%" in contract, "契约里必须写死正文字号＝封面标题的 65%"
 
 
 def test_cover_keeps_headline_hierarchy():
