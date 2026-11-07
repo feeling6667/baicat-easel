@@ -184,6 +184,10 @@ jobs:
         os: [ubuntu-latest, windows-latest]
     runs-on: ${{ matrix.os }}
     timeout-minutes: 60
+    env:
+      # Windows runner 的控制台是 cp1252，doctor 打印中文会 UnicodeEncodeError。
+      # 项目本身约定用 UTF-8（setup.ps1 开头也设了这个），CI 里显式带上。
+      PYTHONUTF8: '1'
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v6
