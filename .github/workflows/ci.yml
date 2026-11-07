@@ -248,6 +248,16 @@ jobs:
       - name: doctor
         shell: bash
         run: |
+          # setup.ps1 用 winget 装的 FFmpeg 只改了注册表里的用户 PATH，
+          # 本 job 后续 step 的环境变量不会重新读取 —— 手动补上它的目录。
+          # 两种落地位置都试：命令别名目录，以及解压出来的 package bin 目录。
+          if [ "$RUNNER_OS" = "Windows" ]; then
+            WINGET_LOCAL="$(cygpath -u "$LOCALAPPDATA")/Microsoft/WinGet"
+            for dir in "$WINGET_LOCAL/Links" "$WINGET_LOCAL"/Packages/*/ffmpeg*/bin; do
+              if [ -d "$dir" ]; then PATH="$PATH:$dir"; fi
+            done
+            export PATH
+          fi
           # 非交互安装不会创建 .venv（setup.sh 只在交互模式或已存在时才用虚拟环境），
           # 所以这里不能假定 .venv 存在：按 项目 venv → PATH → python -m 依次找。
           if [ -x .venv/bin/easel ]; then .venv/bin/easel doctor
