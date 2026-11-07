@@ -12,7 +12,7 @@ layer: general
 
 **本 skill 必须自包含。不要假设用户安装后还能读取仓库里的知识包、参考文档或额外支持文件。只要拿到这一个 `SKILL.md`，也必须能完整执行。**
 
-**本 skill 不是轻量 prompt，而是单目录重型 skill。`SKILL.md`、脚手架、模板、脚本、文档都固定留在 `skills/dbs-content-system/` 目录内部，不依赖共享目录。**
+**本 skill 不是轻量 prompt，而是单目录重型 skill。`SKILL.md`、脚手架、模板、脚本、文档都固定留在 `skills/builtin/dbs-content-system/` 目录内部，不依赖共享目录。**
 
 ---
 

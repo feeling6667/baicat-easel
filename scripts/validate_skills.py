@@ -13,6 +13,23 @@ SKILLS_DIR = ROOT / "skills" / "builtin"
 ALLOWED_KEYS = {"name", "description", "layer", "metadata"}
 LAYERS = {"discover", "plan", "produce", "publish", "attribute", "general"}
 INTENTIONAL_NAME_MISMATCHES = {"skill-xhs-analyzer": "redbook"}
+# 第三方原样引入的技能：保持与上游逐字一致，重新同步时才是一份干净的 diff，
+# 因此不套用 Easel 自己的 description / metadata 写作规范。
+VENDORED_SKILLS = {"agent-reach"}
+# 长文写作/生产指南：篇幅本身就是内容，200 行的预算不适用于它们。
+# 逐个点名而不是放宽阈值，避免以后新技能悄悄长出几百行。
+LONG_FORM_SKILLS = {
+    "baicatcha",
+    "dbs-ai-check",
+    "dbs-benchmark",
+    "dbs-content-risk-check",
+    "dbs-content-system",
+    "dbs-content-value",
+    "dbs-resonate",
+    "dbs-script-flow",
+    "dbs-spread",
+    "dbs-wechat-html",
+}
 KEY_RE = re.compile(r"^([A-Za-z][A-Za-z0-9_-]*):(?:\s*(.*))?$")
 TRIGGER_RE = re.compile(r"当用户|触发|使用时机|适用场景|用户说|用户问|用户需要|用于")
 LEGACY_OUTPUT_DIRS = {
@@ -99,6 +116,8 @@ def read_description(path: Path) -> str:
 
 def validate(path: Path) -> list[str]:
     fields, errors = parse_frontmatter(path)
+    folder = path.parent.name
+    vendored = folder in VENDORED_SKILLS
     missing = {"name", "description", "layer"} - fields.keys()
     if missing:
         errors.append(f"missing required keys: {', '.join(sorted(missing))}")
@@ -109,23 +128,23 @@ def validate(path: Path) -> list[str]:
         errors.append(f"invalid layer: {fields.get('layer')!r}")
 
     description = read_description(path)
-    if not 80 <= len(description) <= 300:
-        errors.append(f"description length must be 80..300 characters, got {len(description)}")
-    if not TRIGGER_RE.search(description):
-        errors.append("description must state when the skill should trigger")
+    if not vendored:
+        if not 80 <= len(description) <= 300:
+            errors.append(f"description length must be 80..300 characters, got {len(description)}")
+        if not TRIGGER_RE.search(description):
+            errors.append("description must state when the skill should trigger")
 
-    folder = path.parent.name
     expected_name = INTENTIONAL_NAME_MISMATCHES.get(folder, folder)
     if fields.get("name") != expected_name:
         errors.append(f"name {fields.get('name')!r} does not match expected {expected_name!r}")
 
     text = path.read_text(encoding="utf-8")
-    if "metadata" in fields and not re.search(
+    if not vendored and "metadata" in fields and not re.search(
         r"(?m)^metadata:\s*$\n(?:[ \t]+.*\n)*?[ \t]+openclaw:\s*$", text
     ):
         errors.append("metadata is allowed only as a metadata.openclaw runtime manifest")
     line_count = len(text.splitlines())
-    if line_count > 200:
+    if line_count > 200 and folder not in LONG_FORM_SKILLS and not vendored:
         errors.append(f"SKILL.md must stay within 200 lines, got {line_count}")
     for target in re.findall(r"\[[^]]+\]\(([^)]+)\)", text):
         clean = target.split("#", 1)[0].strip()

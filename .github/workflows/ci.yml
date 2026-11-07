@@ -227,8 +227,12 @@ jobs:
       - name: doctor
         shell: bash
         run: |
+          # 非交互安装不会创建 .venv（setup.sh 只在交互模式或已存在时才用虚拟环境），
+          # 所以这里不能假定 .venv 存在：按 项目 venv → PATH → python -m 依次找。
           if [ -x .venv/bin/easel ]; then .venv/bin/easel doctor
-          else .venv/Scripts/easel.exe doctor; fi
+          elif [ -x .venv/Scripts/easel.exe ]; then .venv/Scripts/easel.exe doctor
+          elif command -v easel >/dev/null 2>&1; then easel doctor
+          else python3 -m easel doctor; fi
 
       - name: Upload install report
         if: always()

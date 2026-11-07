@@ -86,7 +86,7 @@ python skills/shared/scripts/audio_ops.py normalize vo.mp3 -o vo_norm.mp3
 
 # ③ 把配音作为旁白加到视频
 python skills/shared/scripts/video_ops.py bgm -i clip.mp4 -o clip_vo.mp4 \
-  --music vo.mp3 --voice-volume 0.4 --music-volume 1.0 --music-loop-off
+  --music vo.mp3 --voice-volume 0.4 --music-volume 1.0
 ```
 
 ## 常用中文音色

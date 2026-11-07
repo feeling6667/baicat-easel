@@ -84,9 +84,33 @@ $env:OPENCLAW_GATEWAY_PORT = "$Port"
 # PATH 里的 `openclaw` 是 .cmd shim，CreateProcess 直接跑不了；而且外部进程
 # （WorkBuddy / 计划任务）的 PATH 未必带 node24，靠 PATH 解析会静默失败
 # （曾导致 `restart` 看起来成功、PID 却纹丝不动）。
-$NodeDir  = 'C:\Users\Administrator\.easel-tools\node24'
-$NodeExe  = Join-Path $NodeDir 'node.exe'
-$OpenClaw = Join-Path $NodeDir 'node_modules\openclaw\openclaw.mjs'
+# 定位顺序：EASEL_NODE → 本机 ~\.easel-tools\node24 → PATH。
+# 不能写死 C:\Users\Administrator：换台机器、或 CI 里的 runneradmin 都没有这个
+# 目录，网关会以「找不到 node」直接退出，整个安装被判定失败。
+$NodeExe = $env:EASEL_NODE
+if (-not $NodeExe -or -not (Test-Path $NodeExe)) {
+    $BundledNode = Join-Path $env:USERPROFILE '.easel-tools\node24\node.exe'
+    if (Test-Path $BundledNode) {
+        $NodeExe = $BundledNode
+    } else {
+        $NodeCommand = Get-Command node.exe -ErrorAction SilentlyContinue
+        if ($NodeCommand) { $NodeExe = $NodeCommand.Source }
+    }
+}
+$NodeDir = if ($NodeExe) { Split-Path -Parent $NodeExe } else { '' }
+
+# openclaw.mjs 同理：本机随 node24 一起装；npm -g 安装时落在 %APPDATA%\npm 下。
+$OpenClaw = $env:EASEL_OPENCLAW_MJS
+if (-not $OpenClaw -or -not (Test-Path $OpenClaw)) {
+    $OpenClawCandidates = @(
+        (Join-Path $NodeDir 'node_modules\openclaw\openclaw.mjs'),
+        (Join-Path $env:APPDATA 'npm\node_modules\openclaw\openclaw.mjs')
+    )
+    foreach ($Candidate in $OpenClawCandidates) {
+        if ($Candidate -and (Test-Path $Candidate)) { $OpenClaw = $Candidate; break }
+    }
+}
+if (-not $OpenClaw) { $OpenClaw = Join-Path $NodeDir 'node_modules\openclaw\openclaw.mjs' }
 
 # ── 本机补丁 2/3：Node spawnSync EBUSY 的绕行补丁 ─────────────────────────
 # 现象：本机 spawnSync 只要需要为子进程创建 stdin 管道，就必然抛 EBUSY
@@ -152,7 +176,7 @@ switch ($args[0]) {
         Write-Host "[easel] Starting Easel gateway (profile: $ProfileName, port: $Port)..."
         # 【本机补丁】官方这里用 `openclaw`（PATH .cmd shim）+ powershell -Command，
         # 本机跑不通。改为绝对路径 node + openclaw.mjs 直接起，并先收敛重名环境变量键。
-        if (-not (Test-Path $NodeExe))  { Write-Error "找不到 node: $NodeExe"; exit 1 }
+        if (-not $NodeExe -or -not (Test-Path $NodeExe))  { Write-Error "找不到 node: $NodeExe"; exit 1 }
         if (-not (Test-Path $OpenClaw)) { Write-Error "找不到 openclaw.mjs: $OpenClaw"; exit 1 }
         # 注意：不要在这里给 $env:PATH 赋值。PS 5.1 的 $env: 提供程序在写入大小写
         # 不一致的变量名时会产生重复键（Path / PATH），随后 Start-Process 会抛

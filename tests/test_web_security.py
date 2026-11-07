@@ -218,8 +218,25 @@ def test_valid_base_url(url, ok):
     "http://[::1]/v1",
     "http://no-such-host-zzz.invalid/v1",  # 解析不了就当不安全
 ])
-def test_ssrf_guard_rejects_internal(url):
+def test_ssrf_guard_rejects_internal(url, monkeypatch):
+    # 本机补丁默认放行回环地址（见下一条用例）；这里显式关掉补丁，
+    # 确保官方那条「本机/内网/云元数据一律拒绝」的安全边界仍然成立。
+    monkeypatch.setenv("EASEL_ALLOW_LOOPBACK_MODEL_ENDPOINT", "0")
     assert web._ssrf_safe(url) is False
+
+
+@pytest.mark.parametrize("url", [
+    "http://127.0.0.1:18789/v1",
+    "http://localhost/v1",
+    "http://[::1]/v1",
+])
+def test_ssrf_guard_allows_loopback_for_local_gateways(url, monkeypatch):
+    """本机补丁 2026-10-12：设置面板要能填 magpie（127.0.0.1:3425）这类本机中转。
+
+    只放行回环；局域网、链路本地与云元数据仍由上一条用例守着。
+    """
+    monkeypatch.delenv("EASEL_ALLOW_LOOPBACK_MODEL_ENDPOINT", raising=False)
+    assert web._ssrf_safe(url) is True
 
 
 def test_selftest_probe_has_guards():
@@ -390,7 +407,9 @@ def test_http_mode_drops_raw_text_delta():
     """HTTP 模式正文以 SSE 为准；raw 流里的 text_delta 必须丢弃，否则每个字进两次队列。"""
     import inspect
     src = inspect.getsource(web.api_chat_stream)
-    seg = src.split('et == "text_delta"')[1][:220]
+    # 必须切到「发 token 的那一支」。源码里更早还有一处 et == "text_delta"
+    # （思考进度补丁，只发 progress 事件），切第一处会误判。
+    seg = src.split('if ev == "assistant_text_stream" and et == "text_delta"')[1][:220]
     assert "is_http" in seg, "HTTP 模式没有屏蔽 raw 流的正文，前端会看到重复内容"
 
 
