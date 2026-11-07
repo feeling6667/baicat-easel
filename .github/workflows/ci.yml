@@ -211,6 +211,10 @@ jobs:
       - name: Install (Windows)
         if: runner.os == 'Windows'
         shell: powershell       # 5.1：Windows 自带版本，必须按它验证
+        env:
+          # 常驻网关在 CI 里没有意义，而且它拉起的 node 会一直占着安装步骤的
+          # 输出管道，step 再也不会返回（实测挂到 60 分钟超时）。安装验证跳过它。
+          EASEL_SKIP_GATEWAY: '1'
         run: ./setup.ps1 -OpenClaw -NonInteractive
 
       # 这一条是重点：setup 必须可重入。2026.9.x 拒绝「会删掉已存在子键的整块写入」，
@@ -222,7 +226,20 @@ jobs:
       - name: Install again (idempotency, Windows)
         if: runner.os == 'Windows'
         shell: powershell
+        env:
+          EASEL_SKIP_GATEWAY: '1'
         run: ./setup.ps1 -OpenClaw -NonInteractive
+
+      # 安装步骤里跳过了网关（见上面的 EASEL_SKIP_GATEWAY）。doctor 会检查网关是否
+      # 在跑，所以这里补起一次：用 bash 把输出重定向到文件，node 只拿到文件句柄，
+      # 不再占着 step 的输出管道，步骤才能正常结束。
+      - name: Start gateway (Windows)
+        if: runner.os == 'Windows'
+        shell: bash
+        run: |
+          powershell -NoProfile -ExecutionPolicy Bypass -File scripts/gateway.ps1 start \
+            > /tmp/easel-gateway.log 2>&1 || true
+          cat /tmp/easel-gateway.log
 
       - name: doctor
         shell: bash

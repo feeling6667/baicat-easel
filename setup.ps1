@@ -582,12 +582,19 @@ if (Test-OpenClawSupport @('config') 'validate') {
     Add-Warning 'OpenClaw 配置校验' '当前 OpenClaw 不支持 config validate，已跳过整体校验'
 }
 Step '8/8' '启动并验证' '配置校验 · Gateway health'
-$gw = Invoke-NativeCapture 'powershell' @('-NoProfile','-ExecutionPolicy','Bypass','-File',
-    (Join-Path $Root 'scripts\gateway.ps1'), 'start')
-($gw.Output -split "`n") | Where-Object { $_ } | ForEach-Object { Write-Host $_ }
-# 降级而非中断：gateway 随时可以重启，没理由让一次十几分钟的安装在最后一步作废。
-if (-not $gw.Ok) {
-    Add-Warning 'Gateway' '启动失败' 'powershell -File scripts\gateway.ps1 start' 'high'
+if ($env:EASEL_SKIP_GATEWAY) {
+    # CI / 无人值守：常驻网关不参与安装验证。
+    # 另有一个实际问题：Start-Process 拉起的 node 会继承安装步骤的输出管道，
+    # 于是一次「安装成功」会变成 step 永远不返回，直到 job 超时（已在 CI 复现）。
+    Info 'EASEL_SKIP_GATEWAY 已设置：跳过常驻网关启动'
+} else {
+    $gw = Invoke-NativeCapture 'powershell' @('-NoProfile','-ExecutionPolicy','Bypass','-File',
+        (Join-Path $Root 'scripts\gateway.ps1'), 'start')
+    ($gw.Output -split "`n") | Where-Object { $_ } | ForEach-Object { Write-Host $_ }
+    # 降级而非中断：gateway 随时可以重启，没理由让一次十几分钟的安装在最后一步作废。
+    if (-not $gw.Ok) {
+        Add-Warning 'Gateway' '启动失败' 'powershell -File scripts\gateway.ps1 start' 'high'
+    }
 }
 }
 
