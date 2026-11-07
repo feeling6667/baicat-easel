@@ -106,8 +106,25 @@ if (-not $OpenClaw -or -not (Test-Path $OpenClaw)) {
         (Join-Path $NodeDir 'node_modules\openclaw\openclaw.mjs'),
         (Join-Path $env:APPDATA 'npm\node_modules\openclaw\openclaw.mjs')
     )
+    # npm 自定义全局前缀：CI 的 setup-node 把前缀设成 C:\npm\prefix，
+    # 本机也可能用 `npm config set prefix`。从 PATH 上的 openclaw shim 反推，
+    # 而不是把某个前缀写死。
+    $OpenClawCommand = Get-Command openclaw -ErrorAction SilentlyContinue
+    if ($OpenClawCommand -and $OpenClawCommand.Source) {
+        $OpenClawCandidates += Join-Path (Split-Path -Parent $OpenClawCommand.Source) 'node_modules\openclaw\openclaw.mjs'
+    }
     foreach ($Candidate in $OpenClawCandidates) {
         if ($Candidate -and (Test-Path $Candidate)) { $OpenClaw = $Candidate; break }
+    }
+    # 最后问 npm 自己——最权威，但要多起一个进程，只在上面全落空时才走。
+    if (-not $OpenClaw) {
+        try {
+            $NpmRoot = (& npm root -g 2>$null | Where-Object { $_ } | Select-Object -Last 1)
+            if ($NpmRoot) {
+                $Candidate = Join-Path $NpmRoot 'openclaw\openclaw.mjs'
+                if (Test-Path $Candidate) { $OpenClaw = $Candidate }
+            }
+        } catch { }
     }
 }
 if (-not $OpenClaw) { $OpenClaw = Join-Path $NodeDir 'node_modules\openclaw\openclaw.mjs' }
